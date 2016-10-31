@@ -66,10 +66,16 @@ namespace ToDoBackEnd
 
         public Item Post(NewItemRequest request)
         {
-            var baseUrl = "http://localhost:1337/items/";
             var itemGuid = Guid.NewGuid().ToString();
-            var created = new Item { title = request.title, url = baseUrl + itemGuid, id = itemGuid};
-            if(request.order!=null) created.order = (int)request.order;
+            var created = new Item { 
+                title = request.title, 
+                url = "http://localhost:1337/items/" + itemGuid, 
+                id = itemGuid
+            };
+
+            if(request.order!=null) 
+                created.order = (int)request.order;
+
             Repo.Add(created);
             return created;
         }
