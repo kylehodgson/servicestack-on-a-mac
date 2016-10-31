@@ -73,7 +73,6 @@ namespace ToDoBackEnd
                 id = itemGuid,
                 order = request.order==null ? 0 : (int)request.order
             };
-
             Repo.Add(created);
             return created;
         }

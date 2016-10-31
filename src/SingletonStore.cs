@@ -51,7 +51,11 @@ namespace ToDoBackEnd
              var newRepo = new List<Item>();
              foreach (var item in repo)
              {
-                 if(item.id.Equals(toSave.id)) newRepo.Add(toSave);
+                 if(item.id.Equals(toSave.id)) {
+                     newRepo.Add(toSave);
+                 } else {
+                     newRepo.Add(item);
+                 }
              }
              repo = newRepo;
              return toSave;
