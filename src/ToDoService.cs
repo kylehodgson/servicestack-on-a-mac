@@ -70,11 +70,9 @@ namespace ToDoBackEnd
             var created = new Item { 
                 title = request.title, 
                 url = "http://localhost:1337/items/" + itemGuid, 
-                id = itemGuid
+                id = itemGuid,
+                order = request.order==null ? 0 : (int)request.order
             };
-
-            if(request.order!=null) 
-                created.order = (int)request.order;
 
             Repo.Add(created);
             return created;
