@@ -54,28 +54,14 @@ namespace ToDoBackEnd
     {
         public ToDoStore Repo { get ; set; }
 
-        public List<Item> Get(ViewListRequest request)
-        {
-            return Repo.All();
-        }
-
         public Item Get(ViewItemRequest request) 
         {
             return Repo.SingleById(request.id);
         }
 
-        public Item Patch(PatchItemRequest request) 
+        public List<Item> Get(ViewListRequest request)
         {
-            var original = Repo.SingleById(request.id);
-            if(request.completed!=null) original.completed = (bool)request.completed;
-            if(request.title!=null) original.title = request.title;
-            if(request.order!=null) original.order = (int)request.order;
-            return original;
-        }
-        
-        public void Delete(DeleteItemRequest request) 
-        {
-            Repo.Delete(request.id);
+            return Repo.All();
         }
 
         public Item Post(NewItemRequest request)
@@ -86,6 +72,24 @@ namespace ToDoBackEnd
             if(request.order!=null) created.order = (int)request.order;
             Repo.Add(created);
             return created;
+        }
+
+        public Item Patch(PatchItemRequest request) 
+        {
+            var original = Repo.SingleById(request.id);
+            if(request.completed!=null) 
+                original.completed = (bool)request.completed;
+            if(request.title!=null) 
+                original.title = request.title;
+            if(request.order!=null) 
+                original.order = (int)request.order;
+            Repo.Save(original);
+            return original;
+        }
+
+        public void Delete(DeleteItemRequest request) 
+        {
+            Repo.Delete(request.id);
         }
 
         public void Delete(DeleteAllItemsRequest request)

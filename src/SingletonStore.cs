@@ -10,33 +10,51 @@ namespace ToDoBackEnd
         void Clear();
         Item SingleById(string id);
         void Delete(string id );
+        Item Save(Item item);
     }
 
     public class SingletonStore : ToDoStore {
-         private List<Item> repo = new List<Item>();
 
-         public void Add(Item todo) {
+         private static List<Item> repo = new List<Item>();
+
+         public void Add(Item todo) 
+         {
              repo.Add(todo);
          }
-         public List<Item> All() {
+         public List<Item> All() 
+         {
              return repo;
          }
 
-         public void Clear() {
+         public void Clear() 
+         {
              repo = new List<Item>();
          }
 
-         public Item SingleById(string id) {
+         public Item SingleById(string id) 
+         {
              return repo.FirstOrDefault(item => item.id.Equals(id));
          }
 
-         public void Delete(string id ) {
+         public void Delete(string id ) 
+         {
              var newRepo = new List<Item>();
              foreach (var item in repo)
              {
                  if(!item.id.Equals(id)) newRepo.Add(item);
              }
              repo = newRepo;
+         }
+
+         public Item Save(Item toSave) 
+         {
+             var newRepo = new List<Item>();
+             foreach (var item in repo)
+             {
+                 if(item.id.Equals(toSave.id)) newRepo.Add(toSave);
+             }
+             repo = newRepo;
+             return toSave;
          }
     }
 }
